@@ -1,143 +1,16 @@
-<!DOCTYPE HTML>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
-  <title>Car Game Stream</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    
-    #container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      padding: 20px;
-    }
-    
-    #player {
-      width: min(90vw, 1280px);
-      height: min(90vh, 720px);
-      max-width: 1280px;
-      max-height: 720px;
-      border-radius: 12px;
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-      background: #000;
-      position: relative;
-    }
-    
-    #player video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #000;
-    }
-    
-    /* Loading indicator */
-    #player::before {
-      content: 'Connecting to stream...';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #888;
-      font-size: 18px;
-      z-index: 1;
-      pointer-events: none;
-    }
-    
-    #player:has(video)::before {
-      display: none;
-    }
-    
-    /* Hide all other elements except play button */
-    #warning,
-    .box,
-    #message,
-    p,
-    section {
-      display: none !important;
-    }
-    
-    /* Style any buttons that appear in the player area */
-    #player button {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      border: none;
-      color: white;
-      padding: 16px 32px;
-      font-size: 18px;
-      font-weight: 600;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
-      transition: all 0.3s ease;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-    }
-    
-    #player button:hover {
-      background: linear-gradient(135deg, #4338ca, #6d28d9);
-      box-shadow: 0 12px 24px rgba(79, 70, 229, 0.4);
-      transform: translate(-50%, -50%) translateY(-2px);
-    }
-    
-    #player button:active {
-      transform: translate(-50%, -50%) scale(0.95);
-    }
-    
-    /* Responsive design */
-    @media (max-width: 768px) {
-      #container {
-        padding: 10px;
-      }
-      
-      #player {
-        width: 95vw;
-        height: 95vh;
-        border-radius: 8px;
-      }
-    }
-    
-    /* Subtle animation on load */
-    #player {
-      animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    
-    @keyframes fadeInScale {
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Receiver Sample</title>
 </head>
 <body>
   <div id="container">
-    <!-- Hidden required elements -->
+    <h1>Receiver Sample</h1>
     <div id="warning" hidden="true"></div>
+    <div id="player"></div>
     <div class="box">
       <span>Codec preferences:</span>
       <select id="codecPreferences" autocomplete="off" disabled>
@@ -148,53 +21,16 @@
       <span>Lock Cursor to Player:</span>
       <input type="checkbox" id="lockMouseCheck" autocomplete="off" />
     </div>
+    <p>
+      For more information about sample, see
+        <a href="https://docs.unity3d.com/Packages/com.unity.renderstreaming@3.1/manual/sample-broadcast.html">Broadcast sample</a> document page.
+    </p>
     <div id="message"></div>
-    
-    <!-- Main stream player -->
-    <div id="player">
-      <button id="startButton" onclick="startStream()">
-        <span>▶</span> Start Stream
-      </button>
-    </div>
+    <section>
+      <a href="https://github.com/Unity-Technologies/UnityRenderStreaming/tree/develop/WebApp/client/public/receiver"
+        title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
+    </section>
   </div>
-  
-  <script>
-    let streamStarted = false;
-    
-    function startStream() {
-      const startButton = document.getElementById('startButton');
-      const player = document.getElementById('player');
-      
-      if (!streamStarted) {
-        streamStarted = true;
-        startButton.style.display = 'none';
-        
-        // Trigger any existing start functionality
-        const event = new Event('click');
-        player.dispatchEvent(event);
-        
-        // If there's a play function in main.js, try to call it
-        if (window.startReceiver) {
-          window.startReceiver();
-        }
-      }
-    }
-    
-    // Auto-hide button if stream starts automatically
-    const observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.addedNodes.length > 0) {
-          const hasVideo = document.querySelector('#player video');
-          if (hasVideo && streamStarted) {
-            document.getElementById('startButton').style.display = 'none';
-          }
-        }
-      });
-    });
-    
-    observer.observe(document.getElementById('player'), { childList: true, subtree: true });
-  </script>
-  
   <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   <script src="https://unpkg.com/event-target@latest/min.js"></script>
   <script src="https://unpkg.com/resize-observer-polyfill@1.5.0/dist/ResizeObserver.global.js"></script>
