@@ -4,30 +4,31 @@
   <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="css/style.css" />
-  <title>Car Game</title>
+  <title>Receiver Sample</title>
 </head>
 <body>
   <div id="container">
-    <h1>Car Game Demo</h1>
+    <h1>Receiver Sample</h1>
     <div id="warning" hidden="true"></div>
     <div id="player"></div>
     <div class="box">
-      <span></span>
-      <select id="codecPreferences" hidden="true" autocomplete="off" disabled>
+      <span>Codec preferences:</span>
+      <select id="codecPreferences" autocomplete="off" disabled>
         <option selected value="">Default</option>
       </select>
     </div>
-    <div class="box" hidden="true">
+    <div class="box">
       <span>Lock Cursor to Player:</span>
       <input type="checkbox" id="lockMouseCheck" autocomplete="off" />
     </div>
     <p>
-     
+      For more information about sample, see
+        <a href="https://docs.unity3d.com/Packages/com.unity.renderstreaming@3.1/manual/sample-broadcast.html">Broadcast sample</a> document page.
     </p>
     <div id="message"></div>
     <section>
       <a href="https://github.com/Unity-Technologies/UnityRenderStreaming/tree/develop/WebApp/client/public/receiver"
-        title="" id="viewSource"></a>
+        title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
     </section>
   </div>
   <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
